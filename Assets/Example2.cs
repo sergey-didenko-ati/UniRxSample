@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UniRx;
+using UniRx.Triggers;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Example2 : MonoBehaviour
@@ -33,13 +35,22 @@ public class Example2 : MonoBehaviour
 
 
         // Button actions ------------------------
-        addButton.onClick.AddListener(() => score.Value++);
-        resetButton.onClick.AddListener(() => score.Value=0);
+        addButton.OnPointerDownAsObservable().Subscribe(ScoreUp);
+        resetButton.OnPointerUpAsObservable().Subscribe(ScoreZero);
     }
 
     public void AnimateObj(GameObject go) {
         LeanTween.scale(go, Vector3.one, 0.2f)
             .setFrom(Vector3.one*0.5f)
             .setEase(LeanTweenType.easeOutBack);
+    }
+    
+    protected virtual void ScoreUp(PointerEventData eventData)
+    {
+        score.Value++;
+    }
+    protected virtual void ScoreZero(PointerEventData eventData)
+    {
+        score.Value = 0;
     }
 }
