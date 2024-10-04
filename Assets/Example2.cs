@@ -45,7 +45,7 @@ public class Example2 : MonoBehaviour
             .setEase(LeanTweenType.easeOutBack);
     }
     
-    protected virtual void ScoreUp(PointerEventData eventData)
+    public virtual void ScoreUp(PointerEventData eventData)
     {
         score.Value++;
     }
